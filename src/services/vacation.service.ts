@@ -1,16 +1,24 @@
 /* eslint-disable prettier/prettier */
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { NotFoundException } from '@nestjs/common';
 import { Vacation } from 'src/entities/vacation.entity';
 import { VacationDto } from './../create-dto/vacation.dto';
+import { Logger } from 'winston';
+
 
 @Injectable()
 export class VacationService {
-  constructor(  @InjectRepository(Vacation)  private VacationRepository: Repository<Vacation>){}
+  constructor(  @InjectRepository(Vacation)  private VacationRepository: Repository<Vacation>,
+  @Inject('winston')
+  private readonly logger: Logger,){}
   create(vacation: Vacation|VacationDto) {
-    return this.VacationRepository.save(vacation);
+    
+      return this.VacationRepository.save(vacation). catch ((error)=> {
+      this.logger.error("Erreur de création d'une vacation", error);
+      throw new BadRequestException("Les données que nous avons réçues ne sont celles que  nous espérons");
+    });
   }
 
   createAll(vacation: Vacation[]|VacationDto[]) {
@@ -34,7 +42,7 @@ export class VacationService {
 
   findOne(id: number) {
     return this.VacationRepository.findOneOrFail(id).catch((e)=>{
-        console.log(e);
+      this.logger.error("La vacation   " +id+ " n'existe pas",e);
       throw new NotFoundException("La donnée spécifiée n'existe pas");
     });
   }

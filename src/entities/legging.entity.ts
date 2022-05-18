@@ -6,34 +6,33 @@ import { Audit } from './audit';
 @Entity('leggings')
 export class Legging extends Audit {
 
-    @Column({nullable:true})
+    @Column({nullable:false})
     date:Date;
 
-    @Column({nullable:true})
+    @Column({nullable:false})
     heure:string;
 
-    @Column({nullable:true})
+    @Column({nullable:false})
     old_caisse:string;
 
-    @Column({nullable:true})
+    @Column({nullable:false})
     voie:string;
 
-    @Column({nullable:true})
+    @Column({nullable:false})
     new_caisse:string;
 
-    @Column({nullable:true})
+    @Column({nullable:false})
     old_vehicule:string;
 
-    @Column({nullable:true})
+    @Column({nullable:false})
     old_compte:string;
 
-    @Column({nullable:true})
+    @Column({nullable:false})
     admin:string;
 
-    @Column({nullable:true})
+    @Column({nullable:false})
     statut:string;
 
-    @Column({nullable:true})
+    @Column({nullable:false})
     site:string;
-    
 }

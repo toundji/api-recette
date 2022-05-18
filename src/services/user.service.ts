@@ -1,16 +1,24 @@
 /* eslint-disable prettier/prettier */
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { NotFoundException } from '@nestjs/common';
 import { User } from 'src/entities/user.entity';
 import { UserDto } from 'src/create-dto/user.dto';
+import { Logger } from 'winston';
+
 
 @Injectable()
 export class UserService {
-  constructor(  @InjectRepository(User)  private UserRepository: Repository<User>){}
+  constructor(  @InjectRepository(User)  private UserRepository: Repository<User>,
+  @Inject('winston')
+  private readonly logger: Logger,){}
   create(user: User|UserDto) {
-    return this.UserRepository.save(user);
+   
+      return this.UserRepository.save(user). catch ((error)=> {
+      this.logger.error("Erreur de création d'un utilisateur", error);
+      throw new BadRequestException("Les données que nous avons réçues ne sont celles que  nous espérons");
+    });
   }
 
   createAll(user: User[]|UserDto[]) {
@@ -34,7 +42,7 @@ export class UserService {
 
   findOne(id: number) {
     return this.UserRepository.findOneOrFail(id).catch((e)=>{
-        console.log(e);
+      this.logger.error(" L'utilisateur  " +id+ " n'existe pas",e);
       throw new NotFoundException("La donnée spécifiée n'existe pas");
     });
   }

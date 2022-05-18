@@ -2,16 +2,16 @@
 import { Column, Entity } from "typeorm";
 import { Audit } from "./audit";
 
-@Entity("compagnes")
-export class Compagne extends Audit{
+@Entity("comptages")
+export class Comptage extends Audit{
 
-  @Column({nullable:true})
+  @Column({nullable:false})
   percepteur: string;
   
   @Column({nullable:true})
   voie: string;
 
-  @Column({nullable:true})
+  @Column({nullable:false})
   site: string;
 
   @Column({nullable:true})
@@ -23,9 +23,9 @@ export class Compagne extends Audit{
   @Column({nullable:true})
   nbres_camion: string;
   
-  @Column({nullable:true})
-  heure_debut: Date;
+  @Column({nullable:false})
+  heure_debut: string;
   
-  @Column({nullable:true})
-  heure_fin: Date;
+  @Column({nullable:false})
+  heure_fin: string;
 }

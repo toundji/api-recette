@@ -1,11 +1,12 @@
+/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { WinstonModule } from 'nest-winston';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import orclConfig from './config/orcl-config';
-import ormConfig from './config/ormconfig';
 import { CashFlowController } from './controllers/cash-flow.controller';
-import { CompagneController } from './controllers/compagne.controller';
+import { ComptageController } from './controllers/comptage.controller';
 import { DemandeCarteController } from './controllers/demande-carte.controller';
 import { FicheTechniqueController } from './controllers/fiche-technique.controller';
 import { HydrocarbureController } from './controllers/hydrocarbure.controller';
@@ -22,7 +23,7 @@ import { UserController } from './controllers/user.controller';
 import { VacationController } from './controllers/vacation.controller';
 import { VoieController } from './controllers/voie.controller';
 import { CashFlow } from './entities/cash-flow.entity';
-import { Compagne } from './entities/compagne.entity';
+import { Comptage } from './entities/comptage.entity';
 import { DemandeCarte } from './entities/demande-carte.entity';
 import { FicheTechnique } from './entities/fiche-technique.entity';
 import { Hydrocarbure } from './entities/hydrocarbure.entity';
@@ -40,7 +41,7 @@ import { User } from './entities/user.entity';
 import { Vacation } from './entities/vacation.entity';
 import { Voie } from './entities/voie.entity';
 import { CashFlowService } from './services/cash-flow.service';
-import { CompagneService } from './services/compagne.service';
+import { ComptageService } from './services/comptage.service';
 import { DemandeCarteService } from './services/demande-carte.service';
 import { FicheTechniqueService } from './services/fiche-technique.service';
 import { HydrocarbureService } from './services/hydrocarbure.service';
@@ -57,13 +58,15 @@ import { SurchageService } from './services/surchage.service';
 import { UserService } from './services/user.service';
 import { VacationService } from './services/vacation.service';
 import { VoieService } from './services/voie.service';
+import * as winston from 'winston';
+
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(orclConfig),
     TypeOrmModule.forFeature([
       CashFlow,
-      Compagne,
+      Comptage,
       DemandeCarte,
       FicheTechnique,
       Hydrocarbure,
@@ -81,11 +84,40 @@ import { VoieService } from './services/voie.service';
       Vacation,
       Voie,
     ]),
+    WinstonModule.forRoot({
+      transports: [
+        new winston.transports.Console(),
+        new winston.transports.File({
+          dirname: "./logs/",
+          filename: 'all.log',
+        }),
+        new winston.transports.File({
+          dirname: "./logs/",
+          filename: 'error.log',
+          level: 'error',
+        }),
+        new winston.transports.File({
+          dirname: "./logs/",
+          filename: 'info.log',
+          level: 'info',
+        }),
+        new winston.transports.File({
+          dirname: "./logs/",
+          filename: 'debug.log',
+          level: 'debug',
+        }),
+        new winston.transports.File({
+          dirname: "./logs/",
+          filename: 'warning.log',
+          level: 'warning',
+        }),
+      ],
+    }), 
   ],
   controllers: [
     AppController,
     CashFlowController,
-    CompagneController,
+    ComptageController,
     DemandeCarteController,
     FicheTechniqueController,
     HydrocarbureController,
@@ -106,7 +138,7 @@ import { VoieService } from './services/voie.service';
   providers: [
     AppService,
     CashFlowService,
-    CompagneService,
+    ComptageService,
     DemandeCarteService,
     FicheTechniqueService,
     HydrocarbureService,
@@ -126,7 +158,7 @@ import { VoieService } from './services/voie.service';
   ],
   exports: [
     CashFlowService,
-    CompagneService,
+    ComptageService,
     DemandeCarteService,
     FicheTechniqueService,
     HydrocarbureService,

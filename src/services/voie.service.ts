@@ -1,16 +1,24 @@
 /* eslint-disable prettier/prettier */
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { NotFoundException } from '@nestjs/common';
 import { Voie } from 'src/entities/voie.entity';
 import { VoieDto } from './../create-dto/voie.dto';
+import { Logger } from 'winston';
+
 
 @Injectable()
 export class VoieService {
-  constructor(  @InjectRepository(Voie)  private VoieRepository: Repository<Voie>){}
+  constructor(  @InjectRepository(Voie)  private VoieRepository: Repository<Voie>,
+  @Inject('winston')
+  private readonly logger: Logger,){}
   create(voie: Voie|VoieDto) {
-    return this.VoieRepository.save(voie);
+    
+      return this.VoieRepository.save(voie). catch ((error)=> {
+      this.logger.error("Erreur de création d'une voie", error);
+      throw new BadRequestException("Les données que nous avons réçues ne sont celles que  nous espérons");
+    });
   }
 
   createAll(voie: Voie[]|VoieDto[]) {
@@ -34,12 +42,10 @@ export class VoieService {
 
   findOne(id: number) {
     return this.VoieRepository.findOneOrFail(id).catch((e)=>{
-        console.log(e);
+      this.logger.error("La voie " + id + " n'existe pas",e);
       throw new NotFoundException("La donnée spécifiée n'existe pas");
     });
   }
-
- 
 
   findOneByName(name: string):Promise<Voie> {
     try{return this.VoieRepository.findOne({where:{

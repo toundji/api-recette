@@ -1,16 +1,24 @@
 /* eslint-disable prettier/prettier */
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { NotFoundException } from '@nestjs/common';
 import { SurchageUemoi } from 'src/entities/surchage-uemoi.entity';
 import { SurchageUemoiDto } from './../create-dto/surchage-uemoi.dto';
+import { Logger } from 'winston';
+
 
 @Injectable()
 export class SurchageUemoiService {
-  constructor(  @InjectRepository(SurchageUemoi)  private SurchageUemoiRepository: Repository<SurchageUemoi>){}
+  constructor(  @InjectRepository(SurchageUemoi)  private SurchageUemoiRepository: Repository<SurchageUemoi>,
+  @Inject('winston')
+  private readonly logger: Logger,){}
   create(surchageUemoi: SurchageUemoi|SurchageUemoiDto) {
-    return this.SurchageUemoiRepository.save(surchageUemoi);
+
+      return this.SurchageUemoiRepository.save(surchageUemoi). catch ((error)=> {
+      this.logger.error("Erreur de création d'une surchage uemoi", error);
+      throw new BadRequestException("Les données que nous avons réçues ne sont celles que  nous espérons");
+    });
   }
 
   createAll(surchageUemoi: SurchageUemoi[]|SurchageUemoiDto[]) {
@@ -34,7 +42,7 @@ export class SurchageUemoiService {
 
   findOne(id: number) {
     return this.SurchageUemoiRepository.findOneOrFail(id).catch((e)=>{
-        console.log(e);
+      this.logger.error(" LA surchage uemoi  " +id+ " n'existe pas",e);
       throw new NotFoundException("La donnée spécifiée n'existe pas");
     });
   }

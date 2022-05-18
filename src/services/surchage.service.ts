@@ -1,16 +1,24 @@
 /* eslint-disable prettier/prettier */
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { NotFoundException } from '@nestjs/common';
 import { Surchage } from 'src/entities/surchage.entity';
 import { SurchageDto } from './../create-dto/surchage.dto';
+import { Logger } from 'winston';
+
 
 @Injectable()
 export class SurchageService {
-  constructor(  @InjectRepository(Surchage)  private SurchageRepository: Repository<Surchage>){}
+  constructor(  @InjectRepository(Surchage)  private SurchageRepository: Repository<Surchage>,
+  @Inject('winston')
+  private readonly logger: Logger,){}
   create(surchage: Surchage|SurchageDto) {
-    return this.SurchageRepository.save(surchage);
+    
+      return this.SurchageRepository.save(surchage). catch ((error)=> {
+      this.logger.error("Erreur de création d'une surchage", error);
+      throw new BadRequestException("Les données que nous avons réçues ne sont celles que  nous espérons");
+    });
   }
 
   createAll(surchage: Surchage[]|SurchageDto[]) {
@@ -34,7 +42,7 @@ export class SurchageService {
 
   findOne(id: number) {
     return this.SurchageRepository.findOneOrFail(id).catch((e)=>{
-        console.log(e);
+      this.logger.error(" La surchage manuelle   " +id+ " n'existe pas",e);
       throw new NotFoundException("La donnée spécifiée n'existe pas");
     });
   }

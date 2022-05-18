@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CompagneDto {
+export class ComptageDto {
   @ApiProperty({ required: true })
   percepteur: string;
 
@@ -21,8 +21,9 @@ export class CompagneDto {
   nbres_camion: string;
 
   @ApiProperty({ required: true })
-  heure_debut: Date;
+  heure_debut: string;
 
   @ApiProperty({ required: true })
-  heure_fin: Date;
+  heure_fin: string;
+
 }

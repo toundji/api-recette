@@ -9,7 +9,7 @@ export class Voie extends Audit {
     @Column({nullable:false})
     nom : string;
 
-    @Column({nullable:false})
+    @Column({nullable:true})
     sens : string;
 
     @Column({nullable:false})

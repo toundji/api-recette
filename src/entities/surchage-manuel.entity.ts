@@ -40,13 +40,13 @@ export class SurchageManuel extends Audit {
   @Column({nullable:false})
   montant_payer: number;
 
-  @Column({nullable:false})
+  @Column({nullable:false, default:'RAS'})
   observation: string;
 
-  @Column({nullable:false})
+  @Column({nullable:true})
   voies_id: number;
 
-  @Column({nullable:false})
+  @Column({nullable:false, default: "NORMAL"})
   type: string;
 
   @Column({nullable:false})

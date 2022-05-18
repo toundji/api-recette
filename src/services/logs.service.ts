@@ -3,53 +3,52 @@ import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { NotFoundException } from '@nestjs/common';
-import { Recette } from 'src/entities/recette.entity';
-import { RecetteDto } from './../create-dto/recette.dto';
 import { Logger } from 'winston';
+import { Logs } from 'src/entities/logs.entity';
+import { LogsDto } from 'src/create-dto/logs.dto';
 
 
 @Injectable()
-export class RecetteService {
-  constructor(  @InjectRepository(Recette)  private RecetteRepository: Repository<Recette>,
+export class LogsService {
+  constructor(  @InjectRepository(Logs)  private LogsRepository: Repository<Logs>,
   @Inject('winston')
   private readonly logger: Logger,){}
-  create(recette: Recette |RecetteDto)  {
-      return this.RecetteRepository.save(recette). catch ((error)=> {
-      this.logger.error("Erreur de création d'une recette", error);
+  create(logs: Logs|LogsDto) {
+      return this.LogsRepository.save(logs). catch ((error)=> {
+      this.logger.error("Erreur de création d'un cash flow", error);
       throw new BadRequestException("Les données que nous avons réçues ne sont celles que  nous espérons");
     });
   }
 
-  createAll(recette: Recette[]|RecetteDto[]) {
+  createAll(logs: Logs[] | LogsDto[]) {
     try {
-      return this.RecetteRepository.save(recette);
+      return this.LogsRepository.save(logs);
 
     } catch (error) {
       console.log(error);
       throw new BadRequestException("Les données que nous avons réçues ne sont celles que  nous espérons");
-    
     }
   }
 
   findAll() {
-    return this.RecetteRepository.find();
+    return this.LogsRepository.find();
   }
 
   findAllByIds(ids:number[]) {
-    return this.RecetteRepository.findByIds(ids);
+    return this.LogsRepository.findByIds(ids);
   }
 
   findOne(id: number) {
-    return this.RecetteRepository.findOneOrFail(id).catch((e)=>{
-      this.logger.error(" La recette  " +id+ " n'existe pas",e);
+    return this.LogsRepository.findOneOrFail(id).catch((e)=>{
+      this.logger.error("  Le lgging " +id+ " n'existe pas",e);
       throw new NotFoundException("La donnée spécifiée n'existe pas");
     });
   }
 
  
 
-  findOneByName(name: string):Promise<Recette> {
-    try{return this.RecetteRepository.findOne({where:{
+  findOneByName(name: string):Promise<Logs> {
+    try{return this.LogsRepository.findOne({where:{
       nom: name.toUpperCase()
     }});}catch(e){
         console.log(e);
@@ -58,12 +57,12 @@ export class RecetteService {
     }
   }
 
-  update(id: number, recette: Recette|RecetteDto) {
-    return this.RecetteRepository.update(id, recette);
+  update(id: number, logs: Logs | LogsDto) {
+    return this.LogsRepository.update(id, logs);
   }
 
   remove(id: number) {
-    return this.RecetteRepository.delete(id);
+    return this.LogsRepository.delete(id);
   }
 
 }

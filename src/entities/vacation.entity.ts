@@ -9,7 +9,7 @@ export class Vacation extends Audit {
     @Column({nullable:false})
     type : string;
 
-    @Column({nullable:false})
+    @Column({nullable:true})
     site_id : number;
 
 }

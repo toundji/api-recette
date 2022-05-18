@@ -1,16 +1,23 @@
 /* eslint-disable prettier/prettier */
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { NotFoundException } from '@nestjs/common';
 import { Percepteur } from 'src/entities/percepteur.entity';
 import { PercepteurDto } from './../create-dto/percepteur.dto';
+import { Logger } from 'winston';
+
 
 @Injectable()
 export class PercepteurService {
-  constructor(  @InjectRepository(Percepteur)  private PercepteurRepository: Repository<Percepteur>){}
+  constructor(  @InjectRepository(Percepteur)  private PercepteurRepository: Repository<Percepteur>,
+  @Inject('winston')
+  private readonly logger: Logger,){}
   create(percepteur: Percepteur |PercepteurDto) {
-    return this.PercepteurRepository.save(percepteur);
+      return this.PercepteurRepository.save(percepteur). catch ((error)=> {
+      this.logger.error("Erreur de création d'un percepteur", error);
+      throw new BadRequestException("Les données que nous avons réçues ne sont celles que  nous espérons");
+    });
   }
 
   createAll(percepteur: Percepteur[] |PercepteurDto[]) {
@@ -34,7 +41,7 @@ export class PercepteurService {
 
   findOne(id: number) {
     return this.PercepteurRepository.findOneOrFail(id).catch((e)=>{
-        console.log(e);
+      this.logger.error("Le percepteur " +id+ " n'existe pas",e);
       throw new NotFoundException("La donnée spécifiée n'existe pas");
     });
   }

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { BadRequestException } from '@nestjs/common/exceptions';
 import { ValidationPipe } from '@nestjs/common/pipes/validation.pipe';
 import { NestFactory } from '@nestjs/core';
@@ -6,13 +7,17 @@ import { DocumentBuilder } from '@nestjs/swagger/dist/document-builder';
 import { ValidationError } from 'class-validator/types/validation/ValidationError';
 import { AppModule } from './app.module';
 
+function erreur(errors: ValidationError[],) {
+  return new BadRequestException(errors);
+}
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
   app.setGlobalPrefix('/api');
   // app.useGlobalPipes(
   //   new ValidationPipe({
-  //     exceptionFactory: (errors: ValidationError[]) =>
-  //       new BadRequestException(errors),
+  //     exceptionFactory: (errors: ValidationError[]) => erreur(errors),
   //   }),
   // );
 

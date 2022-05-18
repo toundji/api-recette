@@ -1,16 +1,31 @@
 /* eslint-disable prettier/prettier */
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { NotFoundException } from '@nestjs/common';
 import { CashFlow } from 'src/entities/cash-flow.entity';
 import { CashFlowDto } from './../create-dto/cash-flow.dto';
+import { Logger } from 'winston';
+
+
 
 @Injectable()
 export class CashFlowService {
-  constructor(@InjectRepository(CashFlow)  private CashFlowRepository: Repository<CashFlow>){}
+  constructor(
+    @InjectRepository(CashFlow)
+    private CashFlowRepository: Repository<CashFlow>,
+    @Inject('winston')
+    private readonly logger: Logger,
+  ){}
   create(cashFlow: CashFlow | CashFlowDto) {
-    return this.CashFlowRepository.save(cashFlow);
+    try {
+      return this.CashFlowRepository.save(cashFlow);
+    } catch (error) {
+      this.logger.error("Erreur de création d'un cash flow", error);
+      throw new BadRequestException("Les données que nous avons réçues ne sont celles que  nous espérons");
+
+    }
+    
   }
 
   createAll(cashFlow: CashFlow[] | CashFlowDto[]) {
@@ -34,11 +49,10 @@ export class CashFlowService {
 
   findOne(id: number) {
     return this.CashFlowRepository.findOneOrFail(id).catch((e)=>{
+      this.logger.error("Cash flow" +id+ " introuvable",e);
       throw new NotFoundException("La donnée spécifiée n'existe pas");
     });
   }
-
- 
 
   findOneByName(name: string):Promise<CashFlow> {
     try{return this.CashFlowRepository.findOne({where:{
@@ -56,4 +70,5 @@ export class CashFlowService {
     return this.CashFlowRepository.delete(id);
   }
 
+  
 }

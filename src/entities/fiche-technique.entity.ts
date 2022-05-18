@@ -6,12 +6,12 @@ import { Audit } from './audit';
 @Entity('fiche_techniques')
 export class FicheTechnique extends Audit {
 
-  @Column({nullable:true})
+  @Column({nullable:false})
   nbre_de_panne: string;
 
-  @Column({nullable:true})
+  @Column({nullable:false})
   nbre_coupure_electrique: string;
 
-  @Column({nullable:true})
+  @Column({nullable:false})
   disfonctionement: string;
 }

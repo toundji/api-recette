@@ -8,10 +8,10 @@ export class User extends Audit {
 
     @Column({nullable:false})
     name : string;
-    @Column({unique:true})
+    @Column({unique:false})
     email : string;
 
-    @Column({nullable:false})
+    @Column({nullable:true})
     email_verified_at : string;
 
     @Column({nullable:false})
@@ -20,10 +20,10 @@ export class User extends Audit {
     @Column({nullable:false})
     role : string;
 
-    @Column({nullable:false})
+    @Column({nullable:true})
     site_id : number;
 
-    @Column({nullable:false})
+    @Column({nullable:true})
     remember_token : string;
     
 }

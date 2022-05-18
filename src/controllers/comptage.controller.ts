@@ -1,23 +1,23 @@
 /* eslint-disable prettier/prettier */
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { Compagne } from 'src/entities/compagne.entity';
-import { CompagneService } from 'src/services/compagne.service';
-import { CompagneDto } from './../create-dto/compagne.dto';
+import { Comptage } from 'src/entities/comptage.entity';
+import { ComptageService } from 'src/services/comptage.service';
+import { ComptageDto } from '../create-dto/comptage.dto';
 
-@ApiTags("Compagne")
-@Controller('Compagne')
-export class CompagneController {
-  constructor(private readonly rolesService: CompagneService) {}
+@ApiTags("Comptage")
+@Controller('comptages')
+export class ComptageController {
+  constructor(private readonly rolesService: ComptageService) {}
 
   @Post()
-  create(@Body() compagne: CompagneDto) {
+  create(@Body() compagne: ComptageDto) {
     return this.rolesService.create(compagne);
   }
 
 
   @Post("/all")
-  createAll(@Body() compagne: CompagneDto[]) {
+  createAll(@Body() compagne: ComptageDto[]) {
     return this.rolesService.createAll(compagne);
   }
 
@@ -32,7 +32,7 @@ export class CompagneController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() compagne: CompagneDto) {
+  update(@Param('id') id: string, @Body() compagne: ComptageDto) {
     return this.rolesService.update(+id, compagne);
   }
 

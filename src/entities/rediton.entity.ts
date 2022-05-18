@@ -19,7 +19,7 @@ export class Rediton extends Audit {
   @Column({nullable:false})
   prix: number;
 
-  @Column({nullable:false})
+  @Column({nullable:true})
   site: string;
 
   @Column({nullable:false})
@@ -31,25 +31,25 @@ export class Rediton extends Audit {
   @Column({nullable:false})
   type: string;
 
-  @Column({nullable:false})
+  @Column({nullable:true})
   ptrac: string;
 
-  @Column({nullable:false})
+  @Column({nullable:true})
   cmaes: string;
 
-  @Column({nullable:false})
+  @Column({nullable:true})
   es: string;
 
-  @Column({nullable:false})
+  @Column({nullable:true})
   ptt: string;
 
-  @Column({nullable:false})
+  @Column({nullable:true})
   over: string;
 
   @Column({nullable:false})
   caisse: string;
 
-  @Column({nullable:false})
+  @Column({nullable:true})
   plaque: string;
 
   @Column({nullable:false})
@@ -58,7 +58,7 @@ export class Rediton extends Audit {
   @Column({nullable:false})
   refer: string;
 
-  @Column({nullable:false})
+  @Column({nullable:true})
   visa: string;
 
   @Column({nullable:false})

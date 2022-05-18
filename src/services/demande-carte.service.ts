@@ -1,16 +1,27 @@
 /* eslint-disable prettier/prettier */
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { NotFoundException } from '@nestjs/common';
 import { DemandeCarte } from 'src/entities/demande-carte.entity';
 import { DemandeCarteDto } from 'src/create-dto/demande-carte.dto';
+import { Logger } from 'winston';
+
 
 @Injectable()
 export class DemandeCarteService {
-  constructor(  @InjectRepository(DemandeCarte)  private DemandeCarteRepository: Repository<DemandeCarte>){}
+  constructor(  @InjectRepository(DemandeCarte)  private DemandeCarteRepository: Repository<DemandeCarte>,
+  @Inject('winston')
+    private readonly logger: Logger,
+  ){}
   create(demandeCarte: DemandeCarte |DemandeCarteDto) {
-    return this.DemandeCarteRepository.save(demandeCarte);
+    
+      return this.DemandeCarteRepository.save(demandeCarte). catch ((error)=> {
+    
+      this.logger.error("Erreur de création d'un cash flow", error);
+      throw new BadRequestException("Les données que nous avons réçues ne sont celles que  nous espérons");
+
+    });
   }
 
   createAll(demandeCarte: DemandeCarte[]  |DemandeCarteDto[]) {
@@ -34,7 +45,7 @@ export class DemandeCarteService {
 
   findOne(id: number) {
     return this.DemandeCarteRepository.findOneOrFail(id).catch((e)=>{
-        console.log(e);
+      this.logger.error("La demande de carte " +id+ " introuvable",e);
       throw new NotFoundException("La donnée spécifiée n'existe pas");
     });
   }

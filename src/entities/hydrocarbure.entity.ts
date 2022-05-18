@@ -6,25 +6,25 @@ import { Audit } from './audit';
 @Entity('hydrocarbure')
 export class Hydrocarbure extends Audit {
 
-    @Column({nullable:true})
+    @Column({nullable:false})
     percepteur: string;
 
-    @Column({nullable:true})
+    @Column({nullable:false})
     date: Date;
 
-    @Column({nullable:true})
+    @Column({nullable:false})
     prix: string;
 
     @Column({nullable:true})
     site: string;
 
-    @Column({nullable:true})
+    @Column({nullable:false})
     cabine: string;
 
-    @Column({nullable:true})
+    @Column({nullable:false})
     sens: string;
 
-    @Column({nullable:true})
+    @Column({nullable:false})
     type: string;
 
     @Column({nullable:true})
@@ -42,7 +42,7 @@ export class Hydrocarbure extends Audit {
     @Column({nullable:true})
     conducteur: string;
 
-    @Column({nullable:true})
+    @Column({nullable:false})
     provenance: string;
 
     @Column({nullable:true})

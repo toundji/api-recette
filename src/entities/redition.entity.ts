@@ -67,27 +67,27 @@ export class Redition extends Audit {
   @Column({nullable:false})
   somme_declarer_caisse: string;
 
-  @Column({nullable:false})
+  @Column({nullable:true})
   resultat_compte: string;
 
-  @Column({nullable:false})
+  @Column({nullable:true})
   somme_gate: string;
 
-  @Column({nullable:false})
+  @Column({nullable:true})
   passage_gate_24: string;
 
-  @Column({nullable:false})
+  @Column({nullable:true})
   remarque: string;
 
-  @Column({nullable:false})
+  @Column({nullable:true})
   nbre_passage: string;
 
-  @Column({nullable:false})
+  @Column({nullable:true})
   montant_coupant: string;
 
-  @Column({nullable:false})
+  @Column({nullable:true})
   somme_totale_informatise: string;
 
-  @Column({nullable:false})
+  @Column({nullable:true})
   somme_informatise_sans_gate_24: string;
 }

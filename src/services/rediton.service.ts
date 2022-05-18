@@ -1,27 +1,32 @@
 /* eslint-disable prettier/prettier */
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { NotFoundException } from '@nestjs/common';
 import { Rediton } from 'src/entities/rediton.entity';
 import { ReditonDto } from './../create-dto/rediton.dto';
+import { Logger } from 'winston';
+
 
 @Injectable()
 export class ReditonService {
-  constructor(  @InjectRepository(Rediton)  private ReditonRepository: Repository<Rediton>){}
+  constructor(  @InjectRepository(Rediton)  private ReditonRepository: Repository<Rediton>,
+  @Inject('winston')
+  private readonly logger: Logger,){}
   create(rediton: Rediton|ReditonDto) {
-    return this.ReditonRepository.save(rediton);
+    try {
+      return this.ReditonRepository.save(rediton);
+    } catch (error) {
+      this.logger.error("Erreur de création d'une redition", error);
+      throw new BadRequestException("Les données que nous avons réçues ne sont celles que  nous espérons");
+    }
   }
 
   createAll(rediton: Rediton[]|ReditonDto[]) {
-    try {
-      return this.ReditonRepository.save(rediton);
-
-    } catch (error) {
+      return this.ReditonRepository.save(rediton). catch ((error)=> {
       console.log(error);
       throw new BadRequestException("Les données que nous avons réçues ne sont celles que  nous espérons");
-    
-    }
+    });
   }
 
   findAll() {
@@ -34,7 +39,7 @@ export class ReditonService {
 
   findOne(id: number) {
     return this.ReditonRepository.findOneOrFail(id).catch((e)=>{
-        console.log(e);
+      this.logger.error(" LA retition  " +id+ " n'existe pas",e);
       throw new NotFoundException("La donnée spécifiée n'existe pas");
     });
   }
