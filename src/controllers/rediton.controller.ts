@@ -6,7 +6,7 @@ import { ReditonService } from 'src/services/rediton.service';
 import { ReditonDto } from './../create-dto/rediton.dto';
 
 @ApiTags("Rediton")
-@Controller('rediton')
+@Controller('validation')
 export class ReditonController {
   constructor(private readonly rolesService: ReditonService) {}
 

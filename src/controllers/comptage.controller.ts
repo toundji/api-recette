@@ -6,7 +6,7 @@ import { ComptageService } from 'src/services/comptage.service';
 import { ComptageDto } from '../create-dto/comptage.dto';
 
 @ApiTags("Comptage")
-@Controller('comptages')
+@Controller('comptage')
 export class ComptageController {
   constructor(private readonly rolesService: ComptageService) {}
 

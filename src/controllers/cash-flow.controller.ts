@@ -5,7 +5,7 @@ import { CashFlowDto } from 'src/create-dto/cash-flow.dto';
 import { CashFlowService } from 'src/services/cash-flow.service';
 
 @ApiTags("Cash Flow")
-@Controller('Cash-Flow')
+@Controller('cashFlow')
 export class CashFlowController {
   constructor(private readonly rolesService: CashFlowService) {}
 

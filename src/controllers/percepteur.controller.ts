@@ -6,7 +6,7 @@ import { PercepteurService } from 'src/services/percepteur.service';
 import { PercepteurDto } from './../create-dto/percepteur.dto';
 
 @ApiTags("Percepteur")
-@Controller('percepteurs')
+@Controller('percepteur')
 export class PercepteurController {
   constructor(private readonly rolesService: PercepteurService) {}
 

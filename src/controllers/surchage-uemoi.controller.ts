@@ -6,7 +6,7 @@ import { SurchageUemoiService } from 'src/services/surchage-uemoi.service';
 import { SurchageUemoiDto } from './../create-dto/surchage-uemoi.dto';
 
 @ApiTags("Surchage Uemoi")
-@Controller('surchage-uemoi')
+@Controller('surchageUemoi')
 export class SurchageUemoiController {
   constructor(private readonly rolesService: SurchageUemoiService) {}
 

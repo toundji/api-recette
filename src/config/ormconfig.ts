@@ -22,7 +22,7 @@ const ormConfig:MysqlConnectionOptions = {
 
     entities: ["dist/**/*.entity{.ts,.js}"],
 
-    synchronize: true,
+    synchronize: false,
     // migrations: ["dist/migrations/*.js"],
     cli: {
         // migrationsDir: "src/migrations",

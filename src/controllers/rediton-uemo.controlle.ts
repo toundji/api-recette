@@ -6,7 +6,7 @@ import { ReditonUemoService } from 'src/services/rediton-uemo.service';
 import { ReditonUemoDto } from './../create-dto/rediton-uemo.dto';
 
 @ApiTags("Rediton Uemo")
-@Controller('rediton-uemo')
+@Controller('redditionUemoi')
 export class ReditonUemoController {
   constructor(private readonly rolesService: ReditonUemoService) {}
 

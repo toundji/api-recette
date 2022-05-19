@@ -18,8 +18,8 @@ const orclConfig:OracleConnectionOptions = {
 
     host: "localhost",
     port: 1521,
-    username: "validation",
-    password: "Validation",
+    username: "ekpe_recette",
+    password: "EkpeRecette2O22",
     // database: "validation",
     sid: "oracle",
     

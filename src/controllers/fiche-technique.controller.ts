@@ -6,11 +6,11 @@ import { FicheTechnique } from 'src/entities/fiche-technique.entity';
 import { FicheTechniqueService } from 'src/services/fiche-technique.service';
 
 @ApiTags("Fiches Techinique")
-@Controller('fiche-technique')
+@Controller('fiche/techniques')
 export class FicheTechniqueController {
   constructor(private readonly rolesService: FicheTechniqueService) {}
 
-  @Post()
+  @Post("store")
   create(@Body() ficheTechnique: FicheTechniqueDto) {
     return this.rolesService.create(ficheTechnique);
   }
@@ -21,7 +21,7 @@ export class FicheTechniqueController {
     return this.rolesService.createAll(ficheTechnique);
   }
 
-  @Get()
+  @Get("get")
   findAll() {
     return this.rolesService.findAll();
   }

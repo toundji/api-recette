@@ -59,6 +59,7 @@ import { UserService } from './services/user.service';
 import { VacationService } from './services/vacation.service';
 import { VoieService } from './services/voie.service';
 import * as winston from 'winston';
+import ormConfig from './config/ormconfig';
 
 
 @Module({
@@ -88,26 +89,26 @@ import * as winston from 'winston';
       transports: [
         new winston.transports.Console(),
         new winston.transports.File({
-          dirname: "./logs/",
+          dirname: "./src/logs/",
           filename: 'all.log',
         }),
         new winston.transports.File({
-          dirname: "./logs/",
+          dirname: "./src/logs/",
           filename: 'error.log',
           level: 'error',
         }),
         new winston.transports.File({
-          dirname: "./logs/",
+          dirname: "./src/logs/",
           filename: 'info.log',
           level: 'info',
         }),
         new winston.transports.File({
-          dirname: "./logs/",
+          dirname: "./src/logs/",
           filename: 'debug.log',
           level: 'debug',
         }),
         new winston.transports.File({
-          dirname: "./logs/",
+          dirname: "./src/logs/",
           filename: 'warning.log',
           level: 'warning',
         }),

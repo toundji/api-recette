@@ -31,7 +31,7 @@ async function bootstrap() {
     .addTag('cast')
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('/api/documentation', app, document);
-  await app.listen(3000, '0.0.0.0');
+  SwaggerModule.setup('/api/doc', app, document);
+  await app.listen(process.env.PORT || 3000, '0.0.0.0');
 }
 bootstrap();

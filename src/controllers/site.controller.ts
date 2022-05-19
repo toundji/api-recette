@@ -6,7 +6,7 @@ import { SiteService } from 'src/services/site.service';
 import { SiteDto } from './../create-dto/site.dto';
 
 @ApiTags("Site")
-@Controller('sties')
+@Controller('sites')
 export class SiteController {
   constructor(private readonly rolesService: SiteService) {}
 
