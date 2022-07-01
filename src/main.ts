@@ -25,7 +25,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Validation API')
     .setDescription(
-      "Système d'Identification RFID Mobile des conducteurs motos(Zems) au Bénin",
+      "Système de gestion du pont de payage de èkpè :  Partie API",
     )
     .setVersion('1.0')
     .addTag('cast')

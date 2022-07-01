@@ -8,24 +8,18 @@ const ormConfig:MysqlConnectionOptions = {
     type: 'mysql',
     // url: process.env.DB_URL,
     // ssl: { rejectUnauthorized: false },
-    // host: process.env.DATABASE_HOST,
-    // port: (process.env.DATABASE_PORT as any) as number,
-    // username: process.env.DATABASE_USER,
-    // password: process.env.DATABASE_PASSWORD,
-    // database: process.env.DATABASE_NAME,
-
-    host: "localhost",
-    port: 3306,
-    username: "root",
-    password: "",
-    database: "rs1692874_reddition",
+    host: process.env.DATABASE_HOST,
+    port: (process.env.DATABASE_PORT as any) as number,
+    username: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASSWORD,
+    database: process.env.DATABASE_NAME,
 
     entities: ["dist/**/*.entity{.ts,.js}"],
 
-    synchronize: false,
-    // migrations: ["dist/migrations/*.js"],
+    synchronize: true,
+    migrations: ["dist/migrations/*.js"],
     cli: {
-        // migrationsDir: "src/migrations",
+        migrationsDir: "src/migrations",
         entitiesDir: "src/**/*"
     }
 };

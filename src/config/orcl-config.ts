@@ -27,9 +27,9 @@ const orclConfig:OracleConnectionOptions = {
     entities: ["dist/**/*.entity{.ts,.js}"],
 
     synchronize: true,
-    // migrations: ["dist/migrations/*.js"],
+    migrations: ["dist/migrations/*.js"],
     cli: {
-        // migrationsDir: "src/migrations",
+        migrationsDir: "src/migrations",
         entitiesDir: "src/**/*"
     }
 };
